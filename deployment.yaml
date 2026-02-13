@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webpage2
+  namespace: stage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webpage2
+  template:
+    metadata:
+      labels:
+        app: webpage2
+    spec:
+      containers:
+      - name: webpage2
+        image: DOCKER_IMAGE
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webpage2-service
+  namespace: stage
+spec:
+  type: ClusterIP
+  selector:
+    app: webpage2
+  ports:
+  - port: 80
+    targetPort: 80
